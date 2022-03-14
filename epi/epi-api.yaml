@@ -1,0 +1,711 @@
+openapi: 3.0.3
+info:
+  title: ePI - electronic Product Information API
+  version: '1.0'
+  x-logo:
+    url: ''
+servers:
+  - url: https://{serverPath}/mappingEngine/epiqa/vault.qa.{companyID}
+    variables:
+      serverPath:
+        default: epiqa.westeurope.cloudapp.azure.com
+        description: website URL
+      companyID:
+        default: nvs
+        description: company abbreviation
+  - url: https://{serverPath}/mappingEngine/epidev/vault.dev.{companyID}
+    variables:
+      serverPath:
+        default: epidev.westeurope.cloudapp.azure.com
+        description: website URL
+      companyID:
+        default: nvs
+        description: company abbreviation
+paths:
+  /batch:
+    put:
+      tags:
+        - batch
+      operationId: batch
+      summary: create and update a batch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productCode
+                - batch
+                - expiryDate
+              properties:
+                productCode:
+                  type: string
+                batch:
+                  type: string
+                expiryDate:
+                  type: string
+                packagingSiteName:
+                  type: string
+                flagEnableEXPVerification:
+                  type: boolean
+                flagEnableExpiredEXPCheck:
+                  type: boolean
+                batchMessage:
+                  type: string
+                flagEnableBatchRecallMessage:
+                  type: boolean
+                recallMessage:
+                  type: string
+                flagEnableACFBatchCheck:
+                  type: boolean
+                acfBatchCheckURL:
+                  type: string
+                flagEnableSNVerification:
+                  type: boolean
+                snValid:
+                  type: array
+                  items:
+                    type: string
+                snRecalled:
+                  type: array
+                  items:
+                    type: string
+                snDecom:
+                  type: array
+                  items:
+                    type: string
+            example:
+              productCode: '09088884204623'
+              batch: SO10022
+              expiryDate: '230630'
+              packagingSiteName: Stein
+              flagEnableEXPVerification: true
+              flagEnableExpiredEXPCheck: true
+              flagEnableBatchRecallMessage: false
+              flagEnableACFBatchCheck: false
+              flagEnableSNVerification: true
+              snValid:
+                - '634083499701'
+              snRecalled: []
+              snDecom: []
+      responses:
+        '200':
+          description: request successfully handled
+          headers:
+            messageType:
+              description: Message type
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageTypeVersion:
+              description: >-
+                Version of the message type, to differentiate older/newer
+                versions of the interface data structure
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                format: decimal
+            senderID:
+              description: To identify sending system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            receiverID:
+              description: To identify receiving system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageID:
+              description: >-
+                Unique identifier for the message (beneficial for error
+                handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageDateTime:
+              description: Date and time the message was generated (Date, Time, timezone)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+            requestMessageType:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageTypeVersion:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                format: decimal
+            requestSenderID:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageDateTime:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - responseCounter
+                    - responseType
+                  properties:
+                    responseCounter:
+                      type: number
+                    responseType:
+                      type: string
+                      format: char
+                    responseDescription:
+                      type: string
+                      format: char
+              example:
+                - responseCounter: '1'
+                  responseType: '01'
+                  responseDescription: Product successfully updated in DSU
+          links: {}
+        '501':
+          description: request couldn't be handled
+          headers:
+            messageType:
+              description: Message type
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageTypeVersion:
+              description: >-
+                Version of the message type, to differentiate older/newer
+                versions of the interface data structure
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                format: decimal
+            senderID:
+              description: To identify sending system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            receiverID:
+              description: To identify receiving system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageID:
+              description: >-
+                Unique identifier for the message (beneficial for error
+                handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageDateTime:
+              description: Date and time the message was generated (Date, Time, timezone)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+            requestMessageType:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageTypeVersion:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                format: decimal
+            requestMessageID:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageDateTime:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+          content:
+            application/json:
+              schema:
+                type: object
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+                required:
+                  - responseCounter
+                  - responseType
+                properties:
+                  responseCounter:
+                    type: number
+                  responseType:
+                    type: string
+                    format: char
+                  responseDescription:
+                    type: string
+                    format: char
+                  errorData:
+                    type: string
+                    format: char
+                  errorDataField:
+                    type: string
+                    format: char
+              example:
+                - responseCounter: '1'
+                  responseType: '01'
+                  responseDescription: Mandatory field missing
+                  errorData: 5060141900015 S0001, product does not exist
+                  errorDataField: product code
+          links: {}
+      parameters:
+        - name: messageType
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: messageTypeVersion
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: number
+            format: decimal
+        - name: senderID
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: receiverID
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: messageID
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: messageDateTime
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+            format: datetime
+        - name: token
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+  /product:
+    summary: ''
+    put:
+      tags:
+        - product
+      operationId: product
+      summary: create and update a product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productCode
+                - inventedName
+                - nameMedicinalProduct
+              properties:
+                productCode:
+                  type: string
+                inventedName:
+                  type: string
+                nameMedicinalProduct:
+                  type: string
+                internalMaterialCode:
+                  type: string
+                strength:
+                  type: string
+                flagEnableACFProductCheck:
+                  type: boolean
+                adverseEventReportingURL:
+                  type: string
+                acfProductCheckURL:
+                  type: string
+                flagDisplayEPI_BatchRecalled:
+                  type: boolean
+                flagDisplayEPI_SNRecalled:
+                  type: boolean
+                flagDisplayEPI_SNDecommissioned:
+                  type: boolean
+                flagDisplayEPI_SNUnknown:
+                  type: boolean
+                flagDisplayEPI_EXPIncorrect:
+                  type: boolean
+                flagDisplayEPI_BatchExpired:
+                  type: boolean
+                patientSpecificLeaflet:
+                  type: string
+                healthcarePractitionerInfo:
+                  type: string
+                markets:
+                  $ref: '#/components/schemas/markets'
+            example:
+              productCode: '07612791478284'
+              internalMaterialCode: '123456'
+              inventedName: S-IntegProduct_02
+              nameMedicinalProduct: Super IntegProduct 2.5 mg 56 tablets
+              strength: 2.5 mg
+              flagEnableAdverseEventReporting: false
+              flagEnableACFProductCheck: false
+              flagDisplayEPI_BatchRecalled: false
+              flagDisplayEPI_SNRecalled: true
+              flagDisplayEPI_SNDecommissioned: true
+              flagDisplayEPI_SNUnknown: true
+              flagDisplayEPI_EXPIncorrect: true
+              flagDisplayEPI_BatchExpired: true
+              markets:
+                - marketId: IT
+                  nationalCode: '123456'
+                  mahName: Novartis Italy
+                  legalEntityName: Novartis Italy SA
+      responses:
+        '200':
+          description: request successfully handled
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - responseCounter
+                  - responseType
+                properties:
+                  responseCounter:
+                    type: number
+                  responseType:
+                    type: string
+                    format: char
+                  responseDescription:
+                    type: string
+                    format: char
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+              example:
+                responseCounter: '1'
+                responseType: '01'
+                responseDescription: Product successfully updated in DSU
+          headers:
+            messageType:
+              description: Message type
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageTypeVersion:
+              description: >-
+                Version of the message type, to differentiate older/newer
+                versions of the interface data structure.  The response message
+                structure version can be different to the sending message
+                version
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                format: decimal
+            senderID:
+              description: To identify sending system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            receiverID:
+              description: To identify receiving system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageID:
+              description: >-
+                Unique identifier for the message (beneficial for error
+                handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageDateTime:
+              description: Date and time the message was generated (Date, Time, timezone)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+            requestMessageType:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageTypeVersion:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                format: decimal
+            requestSenderID:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageDateTime:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+          links: {}
+        '501':
+          description: request couldn't be handled
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - responseCounter
+                  - responseType
+                properties:
+                  requestMessageDateTime:
+                    type: string
+                    format: datetime
+                  responseCounter:
+                    type: number
+                  responseType:
+                    type: string
+                    format: char
+                  responseDescription:
+                    type: string
+                    format: char
+                  errorData:
+                    type: string
+                    format: char
+                  errorDataField:
+                    type: string
+                    format: char
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+              example:
+                responseCounter: '1'
+                responseType: '01'
+                responseDescription: Mandatory field missing
+                errorData: '99999999999999'
+                errorDataField: product code
+          headers:
+            messageType:
+              description: Message type
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+            messageTypeVersion:
+              description: >-
+                Version of the message type, to differentiate older/newer
+                versions of the interface data structure.  The response message
+                structure version can be different to the sending message
+                version
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+                format: decimal
+            senderID:
+              description: To identify sending system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+            receiverID:
+              description: To identify receiving system (beneficial for error handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+            messageID:
+              description: >-
+                Unique identifier for the message (beneficial for error
+                handling)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            messageDateTime:
+              description: Date and time the message was generated (Date, Time, timezone)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+            requestMessageType:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageTypeVersion:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: number
+                format: decimal
+            requestMessageID:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+            requestMessageDateTime:
+              description: reference info (data from the original message)
+              deprecated: false
+              required: true
+              schema:
+                type: string
+                format: datetime
+          links: {}
+      parameters:
+        - name: messageType
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: messageTypeVersion
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: number
+            format: decimal
+        - name: senderID
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: receiverID
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: messageID
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+        - name: messageDateTime
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+            format: datetime
+        - name: token
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: adminKey
+  schemas:
+    markets:
+      type: array
+      items:
+        type: object
+        properties:
+          marketId:
+            type: string
+          nationalCode:
+            type: string
+          mahName:
+            type: string
+          legalEntityName:
+            type: string
+  headers: {}
+  responses: {}
+  parameters: {}
+tags:
+  - name: product
+    description: product
+  - name: batch
+    description: batch
+security:
+  - ApiKeyAuth: []
