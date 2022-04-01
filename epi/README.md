@@ -22,6 +22,11 @@ When sending API-requests the token needs to be added in the header of the reque
 
 *Authentication with OAuth?*
 
+## Single Sign On (SSO) with OAuth
+ePI allows the integration of SSO with OAuth. OAuth (Open Authorization) is an open standard for access delegation, commonly used as a way for Internet users to grant websites or applications access to their information on other websites but without giving them the passwords.
+
+Please find details about the integration process of OAuth [here.](https://upm365.sharepoint.com/:w:/r/sites/PharmaLedger/_layouts/15/doc2.aspx?sourcedoc=%7B58261221-3903-4080-81BC-B3CBEA78451E%7D&file=ePI%20-%20Enterprise%20Wallet%20SSO%20authentication%20methodology.docx&action=default&mobileredirect=true&DefaultItemOpen=1&params=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjAzMDcwMTYxMCJ9&cid=8e0c4949-c9e1-4b9a-9c64-0032c2959199)
+
 ## Fields and Data Types
 There are three different types of requests: batch, product, leaflet (split into basis and images).
 
