@@ -17,7 +17,7 @@ servers:
         default: vault.my-company
         description: Company vault domain of the specific installation
 paths:
-  //:
+  /:
     put:
       operationId: product
       summary: create and update a product
@@ -206,7 +206,7 @@ paths:
                   '200':
                     description: Your server returns this code if it accepts the callback
 
-  /:
+  //:
     put:
       operationId: batch
       summary: create and update a batch
@@ -392,6 +392,92 @@ paths:
                 responses:
                   '200':
                     description: Your server returns this code if it accepts the callback
+  ///:
+    put:
+      operationId: leaflet
+      summary: create and update a leaflet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+                - language
+                - messageType
+                - xmlFileContent
+                - productCode
+              properties:
+                status:
+                  type: string
+                language:
+                  type: string
+                messageType:
+                  type: string
+                xmlFileContent:
+                  type: string
+                otherFilesContent:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      filename:
+                        type: string
+                      fileContent:
+                        type: string
+                productCode:
+                  type: number
+            example:
+              status: 'new'
+              language: 'en'
+              messageType: 'leaflet'
+              xmlFileContent: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4...'
+              otherFilesContent:
+                - filename: '425be71d-812e-4a54-8dea-bb27eb6b4ecf-01.jpg'
+                  fileContent: '/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQI...'
+                - filename: '425be71d-812e-4a54-8dea-bb27eb6b4ecf-02.jpg'
+                  fileContent: '/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUDBAQEAw...'
+              productCode: '05290931025639'
+      responses:
+        '200':
+            description: OK
+  ////:
+    put:
+      operationId: deleteleaflet
+      summary: delete a leaflet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+                - language
+                - messageType
+                - delete
+                - productCode
+              properties:
+                status:
+                  type: string
+                language:
+                  type: string
+                messageType:
+                  type: string
+                delete:
+                  type: boolean
+                productCode:
+                  type: number
+            example:
+              status: 'delete'
+              language: 'en'
+              messageType: 'leaflet'
+              delete: true
+              productCode: '05290931025639'
+      responses:
+        '200':
+            description: OK
 components:
   securitySchemes:
     ApiKeyAuth:
