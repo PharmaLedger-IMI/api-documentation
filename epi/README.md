@@ -5,27 +5,44 @@ and the openapi documentation with testing capabilites [here](https://www.google
 ## API URL
 After successfully setting up the ePI-API it is available through a link which follows the following structure:
 
-```https://{serverPath}/mappingEngine/{epiDomain}/{companyVaultDomain}```
-
+```
+https://{serverPath}/mappingEngine/{epiDomain}/{companyVaultDomain}
 E.g.: https://epi-singapore-dev.535161841476.cloud.bayer.com/mappingEngine/epipoc/vault.my-company
-
-*How to find link?*
-*Always the same structure?*
-
+```
 ## Verification and Authentication
 
 In order to authenticate API-requests you need to use a valid token. This token will be sent with the API requests.
-
 Tokens are generated in the enterprise wallet specific for each user. After logging in you can find the token under the tab "User as Holder" called "Wallet Identifier". The access rights can be permitted to a specific user in the demiurge wallet.
-
 When sending API-requests the token needs to be added in the header of the request. The name of the header variable is "token" and the value is the wallet identifier.
 
-*Authentication with OAuth?*
-
 ## Single Sign On (SSO) with OAuth
-ePI allows the integration of SSO with OAuth. OAuth (Open Authorization) is an open standard for access delegation, commonly used as a way for Internet users to grant websites or applications access to their information on other websites but without giving them the passwords.
 
-Please find details about the integration process of OAuth [here.](https://upm365.sharepoint.com/:w:/r/sites/PharmaLedger/_layouts/15/doc2.aspx?sourcedoc=%7B58261221-3903-4080-81BC-B3CBEA78451E%7D&file=ePI%20-%20Enterprise%20Wallet%20SSO%20authentication%20methodology.docx&action=default&mobileredirect=true&DefaultItemOpen=1&params=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjAzMDcwMTYxMCJ9&cid=8e0c4949-c9e1-4b9a-9c64-0032c2959199)
+### Overview
+
+Single Sign On (SSO) services protocol used is oAuth for connection.  Federation SSO uses a trust model where the application trusts a message signed by the SSO server.  This removes the application from having to directly validate the user's ID & password against LDAP/Active Directory.
+
+Authentication vs. Authorization:
+Authentication and authorization are the security measures taken in -order to protect data and systems.  Authentication is the process of verifying the person’s identity who is attempting to access the system.  Authorization is the responsibility of the application owner and is a crucial part of checking the privileges or access list for which the person is authorized.
+An overview of High-level flow is provided below:
+**insert ascii chart**
+
+### Prerequisite
+-	Access to Identity Provider such as Azure LDAP
+-	Epi-workspace 
+
+To enable SSO in application, application need to have tenant-client ID and modify epi-workspace source code as explained in below two steps. This document is prepared assuming that Azure being used for ePI application registration for tenant and client ID:
+
+#### 1. Getting tenant and client ID for ePI application
+
+| Step  | Location |
+| ------------- | ------------- |
+| 1. Refer to the two links below for registering your ePI in Azure Active Directory:<br>[How to get Azure api credentials](https://www.inkoop.io/blog/how-to-get-azure-api-credentials/)<br>[How to find tenant](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)| As per your organization  |
+| 2. Put custom scope as explained in the following link:<br>[Quickstart app expose web apis](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis) | As per your organization  |
+| 3. Call back URL value in Azure registration must match with:<br>3.1 ‘redirectPath’ value in apihub.json  ‘http://localhost:8080/?root=true’<br>3.2 ‘postLogoutRedirectUrl’ value in apihub.json  ‘http://localhost:8080/?logout=true’ | Common for all and as defined in apihub.json  |
+
+#### 2. Source code modification
+
+
 
 ## Fields and Data Types
 There are three different types of requests: batch, product, leaflet (split into basis and images).
