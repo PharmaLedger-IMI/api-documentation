@@ -1,6 +1,21 @@
 # ePI - electronic Product Information
-Please find information about setting up the ePI-API [here](https://www.google.com)
-and the openapi documentation with testing capabilites [here](https://www.google.com).
+Please find information about setting up the ePI-API [here](https://www.google.com) (soon)<br>
+and the openapi documentation with testing capabilites [here](https://www.google.com) (soon).
+
+- [ePI - electronic Product Information](#epi---electronic-product-information)
+  * [API URL](#api-url)
+  * [Verification and Authentication](#verification-and-authentication)
+  * [Single Sign On (SSO) with OAuth](#single-sign-on--sso--with-oauth)
+    + [Overview](#overview)
+    + [Prerequisite](#prerequisite)
+      - [1. Getting tenant and client ID for ePI application](#1-getting-tenant-and-client-id-for-epi-application)
+      - [2. Source code modification](#2-source-code-modification)
+  * [Fields and Data Types](#fields-and-data-types)
+  * [Callback URL](#callback-url)
+  * [Buffering](#buffering)
+  * [Try it out](#try-it-out)
+    + [Swagger](#swagger)
+    + [Postman](#postman)
 
 ## API URL
 After successfully setting up the ePI-API it is available through a link which follows the following structure:
@@ -24,7 +39,30 @@ Single Sign On (SSO) services protocol used is oAuth for connection.  Federation
 Authentication vs. Authorization:
 Authentication and authorization are the security measures taken in -order to protect data and systems.  Authentication is the process of verifying the person’s identity who is attempting to access the system.  Authorization is the responsibility of the application owner and is a crucial part of checking the privileges or access list for which the person is authorized.
 An overview of High-level flow is provided below:
-**insert ascii chart**
+
+```mermaid
+sequenceDiagram
+     participant UAB as User Agent Browser
+     participant A as Application
+     participant FSP as Federation SP
+     participant FIDP as Federation IDP
+     participant DS as Data Store (i.e. AD)
+     UAB->>A: Request application resource
+     A->UAB: 
+     UAB->>FSP: Redirect to SP for starting SSO
+     FSP->UAB: 
+     UAB->>FIDP: Redirect to IDP for authentication of user
+     FIDP->>UAB: Show login form for username and password
+     UAB->>FIDP: Get user credentials
+     FIDP->>DS: Validate credentials
+     DS->>FIDP: Validation result (true/false)
+     Note over FIDP: Create Security Token
+     FIDP->UAB: 
+     UAB->>FSP: Give Security Token to SP via User Browser
+     Note over FSP: Validate Assertion
+     FSP->UAB: 
+     UAB->>A: Create Session and redirect user to app
+```
 
 ### Prerequisite
 -	Access to Identity Provider such as Azure LDAP
@@ -75,7 +113,10 @@ Note: Below client configuration is not required. Make sure that ‘oauthEnabled
 ![image](https://user-images.githubusercontent.com/95221118/161936175-a9f2d6ed-8e1f-43d3-9ee2-e78c7c2fe0f5.png)
 
 ## Fields and Data Types
-There are three different types of requests: batch, product, leaflet (split into basis and images).
+There are three different types of requests: 
+- batch
+- product
+- leaflet (split into basis and images)
 
 Please find the request documentation [here]()
 
@@ -83,11 +124,11 @@ and the detailed fields and data type specification [here](https://github.com/Ph
 
 ## Callback URL
 
-How is it defined?
+(soon)
 
 ## Buffering
 
-Is there buffering in place? What is the maximum capacity?
+(soon)
 
 ## Try it out
 
@@ -106,3 +147,14 @@ For further details refer to the [Postman Docs](https://learning.postman.com/doc
 - [Navigating Postman](https://learning.postman.com/docs/getting-started/navigating-postman/)
 - [Send your first request](https://learning.postman.com/docs/getting-started/sending-the-first-request/)
 - [more](https://learning.postman.com/docs/getting-started/introduction/)
+
+## Glossary
+|Abbreviation|Meaning|
+|------------|-------|
+|IAM|Identity & Access Management|
+|IDP|Identity Provider|
+|LDAP|Light Weight Directory Access Protocol|
+|OAuth|Open Authorization Protocol|
+|PAM|Privileged Access Management|
+|SP|Service Provider|
+|SSO|Single Sign On|
