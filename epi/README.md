@@ -41,8 +41,38 @@ To enable SSO in application, application need to have tenant-client ID and modi
 | 3. Call back URL value in Azure registration must match with:<br>3.1 ‘redirectPath’ value in apihub.json  ‘http://localhost:8080/?root=true’<br>3.2 ‘postLogoutRedirectUrl’ value in apihub.json  ‘http://localhost:8080/?logout=true’ | Common for all and as defined in apihub.json  |
 
 #### 2. Source code modification
+- Apihub-root/external-volume/config/apihub.json:
+     -	Keep ‘true’ value for flags: ‘enableOAuth’, ‘enableLocalhostAuthorization’, and ‘serverAuthentication’
+     -	Modify Tenant ID value for flags: ‘oauthJWKSEndpoint’, ‘issuer’, ‘authorizationEndpoint’, ‘tokenEndpoint’ and ‘logoutUrl’.
+     -	Modify Client ID for flags: ‘clientId’ and ‘scope’.
+-	Trust Loader evironment settings for SSO
+     -	epi-workspace/trust-loader-config/demiurge-wallet/loader/environment.js: modify ‘mode’ value From ‘dev-secure’ To ‘sso-pin’.
+     -	epi-workspace/trust-loader-config/dsu-fabric-wallet/loader/environment.js: modify ‘mode’ value From ‘dev-secure’ To ‘sso-direct’.
+- Patient Wallet configuration to skip SSO:
+     - •	Apihub-root/external-volume/config/apihub.json: In ‘skipOAuth’ section add below three values<br>"/leaflet-wallet/",<br>"/directory-summary/",<br>"/iframe/"
+- In your SSO provider application like Azure:
+     - Create a client secret key and update same in flag 'clientSecret' in apihub.json
 
+Note: Below client configuration is not required. Make sure that ‘oauthEnabled’ flag is ‘false’ in oauthConfig.js
 
+<details>
+<summary>Click to expand</summary>
+
+-	apihub-root/external-volume/config/oauthConfig.js:
+     - Keep ‘oauthEnabled’ to false
+     - Modify tenant id (3e7449a0-8ac3-426b-81b8-cd89c85cbe8c) in issuer, authorizationEndpoint and tokenEndpoint as per your tenant id value.
+     - Modify client id (b4108e3e-0a5b-4ee8-b2ea-7c7e1c143a97) in clientId, scope as per your client ID value.
+- apihub-root/external-volume/config/apihub.json:
+     - Keep ‘enableOAuth’ and ‘enableLocalhostAuthorisation’ to true
+     - Modified tenant id in ‘oauthJWKSEndpoint’
+
+</details>
+
+- To check, build server locally and then using tunneling access ePI home page and it should show screen for SSO.
+
+![image](https://user-images.githubusercontent.com/95221118/161936122-55d7b963-1151-4fba-bfa1-de2891708bb4.png)
+![image](https://user-images.githubusercontent.com/95221118/161936148-bfd887e0-14e7-4a23-a824-a93ad8a6b64c.png)
+![image](https://user-images.githubusercontent.com/95221118/161936175-a9f2d6ed-8e1f-43d3-9ee2-e78c7c2fe0f5.png)
 
 ## Fields and Data Types
 There are three different types of requests: batch, product, leaflet (split into basis and images).
