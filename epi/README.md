@@ -1,11 +1,19 @@
 # ePI - electronic Product Information
 
+### Overview
+Please find information about setting up the ePI-API [here](https://www.google.com) (soon)<br>
+and the openapi documentation with testing capabilites [here](https://www.google.com) (soon).
+
+Contact for further questions: Sînică Alboaie (sinica.alboaie@axiologic.net)
+
 ### Table of contents
 - [ePI - electronic Product Information](#epi---electronic-product-information)
+    + [Overview](#overview)
+    + [Table of contents](#table-of-contents)
   * [API URL](#api-url)
   * [Verification and Authentication](#verification-and-authentication)
   * [Single Sign On (SSO) with OAuth](#single-sign-on--sso--with-oauth)
-    + [Overview](#overview)
+    + [Overview](#overview-1)
     + [Prerequisite](#prerequisite)
       - [1. Getting tenant and client ID for ePI application](#1-getting-tenant-and-client-id-for-epi-application)
       - [2. Source code modification](#2-source-code-modification)
@@ -15,12 +23,7 @@
   * [Try it out](#try-it-out)
     + [Swagger](#swagger)
     + [Postman](#postman)
-
-### Overview
-Please find information about setting up the ePI-API [here](https://www.google.com) (soon)<br>
-and the openapi documentation with testing capabilites [here](https://www.google.com) (soon).
-
-Contact for further questions: Sînică Alboaie (sinica.alboaie@axiologic.net)
+  * [Glossary](#glossary)
 
 ## API URL
 After successfully setting up the ePI-API it is available through a link which follows the following structure:
@@ -96,11 +99,12 @@ To enable SSO in application, application need to have tenant-client ID and modi
 - In your SSO provider application like Azure:
      - Create a client secret key and update same in flag 'clientSecret' in apihub.json
 
-Note: You can find an example of the apihub.json in this repository.
-Note: Below client configuration is not required. Make sure that ‘oauthEnabled’ flag is ‘false’ in oauthConfig.js
+Note: You can find an example of the apihub.json in this repository [here](https://github.com/PharmaLedger-IMI/api-documentation/blob/simon-epi-fgt/epi/apihub_having_sso_configuration.json).<br>
+
+:warning:Caution: In the newest version we use a server sided sso implementation. The description of steps above should be sufficient. If you for any reason want to implement client side configuration, please check for the deprecated configuration steps below.
 
 <details>
-<summary>Click to expand</summary>
+<summary>Click to expand for old client sided sso implementation. Outdated!</summary>
 
 -	apihub-root/external-volume/config/oauthConfig.js:
      - Keep ‘oauthEnabled’ to false
@@ -112,7 +116,7 @@ Note: Below client configuration is not required. Make sure that ‘oauthEnabled
 
 </details>
 
-- To check, build server locally and then using tunneling access ePI home page and it should show screen for SSO.
+To check, build server locally and then using tunneling access ePI home page and it should show screen for SSO.
 
 ![image](https://user-images.githubusercontent.com/95221118/161936122-55d7b963-1151-4fba-bfa1-de2891708bb4.png)
 ![image](https://user-images.githubusercontent.com/95221118/161936148-bfd887e0-14e7-4a23-a824-a93ad8a6b64c.png)
