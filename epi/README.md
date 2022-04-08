@@ -70,7 +70,7 @@ sequenceDiagram
 ```
 
 ### Prerequisite
--	Access to Identity Provider such as Azure LDAP
+-	Access to Identity Provider such as Azure AD
 -	Epi-workspace 
 
 To enable SSO in application, application need to have tenant-client ID and modify epi-workspace source code as explained in below two steps. This document is prepared assuming that Azure being used for ePI application registration for tenant and client ID:
@@ -81,7 +81,7 @@ To enable SSO in application, application need to have tenant-client ID and modi
 | ------------- | ------------- |
 | 1. Refer to the two links below for registering your ePI in Azure Active Directory:<br>[How to get Azure api credentials](https://www.inkoop.io/blog/how-to-get-azure-api-credentials/)<br>[How to find tenant](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)| As per your organization  |
 | 2. Put custom scope as explained in the following link:<br>[Quickstart app expose web apis](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis) | As per your organization  |
-| 3. Call back URL value in Azure registration must match with:<br>3.1 ‘redirectPath’ value in apihub.json  ‘http://localhost:8080/?root=true’<br>3.2 ‘postLogoutRedirectUrl’ value in apihub.json  ‘http://localhost:8080/?logout=true’ | Common for all and as defined in apihub.json  |
+| 3. Call back URL value in Azure registration must match with:<br>3.1 ‘redirectPath’ value in apihub.json such as ‘http://localhost:8080/?root=true’<br>3.2 ‘postLogoutRedirectUrl’ value in apihub.json such as ‘http://localhost:8080/?logout=true’ | Common for all and as defined in apihub.json  |
 
 #### 2. Source code modification
 - Apihub-root/external-volume/config/apihub.json:
