@@ -87,7 +87,7 @@ To enable SSO in application, application need to have tenant-client ID and modi
 | 3. Call back URL value in Azure registration must match with:<br>3.1 ‘redirectPath’ value in apihub.json such as ‘http://localhost:8080/?root=true’<br>3.2 ‘postLogoutRedirectUrl’ value in apihub.json such as ‘http://localhost:8080/?logout=true’ | Common for all and as defined in apihub.json  |
 
 #### 2. Source code modification
-(apihub.json helmchart location)[https://github.com/PharmaLedger-IMI/helmchart-ethadapter/blob/master/charts/epi/templates/_configmap-config.tpl]
+[apihub.json helmchart location](https://github.com/PharmaLedger-IMI/helmchart-ethadapter/blob/master/charts/epi/templates/_configmap-config.tpl)
 - Apihub-root/external-volume/config/apihub.json:
      -	Keep ‘true’ value for flags: ‘enableOAuth’, ‘enableLocalhostAuthorization’, and ‘serverAuthentication’
      -	Modify Tenant ID value for flags: ‘oauthJWKSEndpoint’, ‘issuer’, ‘authorizationEndpoint’, ‘tokenEndpoint’ and ‘logoutUrl’.
