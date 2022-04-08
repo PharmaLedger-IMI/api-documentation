@@ -96,6 +96,7 @@ To enable SSO in application, application need to have tenant-client ID and modi
 - In your SSO provider application like Azure:
      - Create a client secret key and update same in flag 'clientSecret' in apihub.json
 
+Note: You can find an example of the apihub.json in this repository.
 Note: Below client configuration is not required. Make sure that ‘oauthEnabled’ flag is ‘false’ in oauthConfig.js
 
 <details>
