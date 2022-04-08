@@ -134,10 +134,15 @@ Please find the request documentation [here]()
 and the detailed fields and data type specification [here](https://github.com/PharmaLedger-IMI/api-documentation/blob/6895ba69a1065dfdbb81a982dc7418a73f7dca42/fgt/schema/product_create.json).
 
 ## Callback URL
+set url per callback
+what happens if callback is unreachable
+logging in place
 
 (soon)
 
 ## Buffering
+limits
+extra setup necessary?
 
 (soon)
 
