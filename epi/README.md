@@ -123,6 +123,11 @@ To check, build server locally and then using tunneling access ePI home page and
 ![image](https://user-images.githubusercontent.com/95221118/161936148-bfd887e0-14e7-4a23-a824-a93ad8a6b64c.png)
 ![image](https://user-images.githubusercontent.com/95221118/161936175-a9f2d6ed-8e1f-43d3-9ee2-e78c7c2fe0f5.png)
 
+
+## User Management & Shared Enclaves
+
+- How to manage the same data with multiple users as well as the company System of Record
+
 ## Fields and Data Types
 There are three different types of requests: 
 - batch
