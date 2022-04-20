@@ -140,8 +140,8 @@ Please find the request documentation [here]()
 and the detailed fields and data type specification [here](https://github.com/PharmaLedger-IMI/api-documentation/blob/6895ba69a1065dfdbb81a982dc7418a73f7dca42/fgt/schema/product_create.json).
 
 ## Callbacks
-The callbacks are handled by the mapping engine which gets set up by setting up the epi workspace.
-After setting up the ePI workspace callbacks will be sent by default to an url with the following structure:
+Callbacks are handled by the mapping engine which gets set up by setting up the ePI-Workspace.
+After the setup the callbacks will be by default sent to an url with the following structure:
 ```
 https://{serverPath}/mappingEngine/{domain}/{subdomain}/saveResult
 E.g.: https://epi-singapore-dev.535161841476.cloud.bayer.com/mappingEngine/epipoc/vault.my-company/saveResult
@@ -163,12 +163,20 @@ After logging in to the Enterprise Wallet:
 <p/>
 </details>
 
+open questions:
+How would you implement the callbacks to e.g. sap?
+Is there a option to redirect?
+
 ## Buffering
-- done by mapping engine
-- embedded database where the messages are stored before they are processed
-- limits speed and storage wise are on the sever side
-- shouldnt be an issue cause its fast
-- if problems - sinica
+Buffering gets handled by the mapping engine which is set up by setting up the ePI-Workspace.
+An embedded database is used to store messages before they are processed.
+There shouldn't be any speed and storage limits, except the storage of the server. 
+In the current state messages get processed almost instantly.
+
+questions:
+Is there a way to read the data from that database - like sap?
+Is that the same database where all the messages are stored?
+What happens if a message is processed?
 
 ## Try it out
 
