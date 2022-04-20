@@ -139,17 +139,21 @@ Please find the request documentation [here]()
 and the detailed fields and data type specification [here](https://github.com/PharmaLedger-IMI/api-documentation/blob/6895ba69a1065dfdbb81a982dc7418a73f7dca42/fgt/schema/product_create.json).
 
 ## Callback URL
-set url per callback
-what happens if callback is unreachable
-logging in place
+- handled by the mapping engine
+- gets set up when setting up the epi workspace
 
-(soon)
+- the callback url is by default baseURL/mappingEngine/domain/subdomain/saveResult
+- eg. https://gov-dev.pharmaledger.dev//mappingEngine/dev.epi.axl/dev.epi.axl
+- when you set it up locally the callback url is: https://localhost:8080/mappingEngine/epi/default
+
+- can see the callbacks in the Enterprise wallet under products -> import
 
 ## Buffering
-limits
-extra setup necessary?
-
-(soon)
+- done by mapping engine
+- embedded database where the messages are stored before they are processed
+- limits speed and storage wise are on the sever side
+- shouldnt be an issue cause its fast
+- if problems - sinica
 
 ## Try it out
 
