@@ -31,6 +31,7 @@ After successfully setting up the ePI-API it is available through a link which f
 ```
 https://{serverPath}/mappingEngine/{epiDomain}/{companyVaultDomain}
 E.g.: https://epi-singapore-dev.535161841476.cloud.bayer.com/mappingEngine/epipoc/vault.my-company
+(local installation: https://localhost:8080/mappingEngine/epi/default)
 ```
 ## Verification and Authentication
 
@@ -138,15 +139,29 @@ Please find the request documentation [here]()
 
 and the detailed fields and data type specification [here](https://github.com/PharmaLedger-IMI/api-documentation/blob/6895ba69a1065dfdbb81a982dc7418a73f7dca42/fgt/schema/product_create.json).
 
-## Callback URL
-- handled by the mapping engine
-- gets set up when setting up the epi workspace
+## Callbacks
+The callbacks are handled by the mapping engine which gets set up by setting up the epi workspace.
+After setting up the ePI workspace callbacks will be sent by default to an url with the following structure:
+```
+https://{serverPath}/mappingEngine/{domain}/{subdomain}/saveResult
+E.g.: https://epi-singapore-dev.535161841476.cloud.bayer.com/mappingEngine/epipoc/vault.my-company/saveResult
+```
 
-- the callback url is by default baseURL/mappingEngine/domain/subdomain/saveResult
-- eg. https://gov-dev.pharmaledger.dev//mappingEngine/dev.epi.axl/dev.epi.axl
-- when you set it up locally the callback url is: https://localhost:8080/mappingEngine/epi/default
+You can see the callbacks in the Enterprise Wallet under Products->Import->View Responses
+<details>
+<summary>Click to expand for a visual guide on where to find the callbacks.</summary>
+<p>
+After logging in to the Enterprise Wallet:
 
-- can see the callbacks in the Enterprise wallet under products -> import
+![Enterprise Wallet Home](https://user-images.githubusercontent.com/95221118/164191447-0a53b3cc-39ef-4339-a6d5-4de78a2d693e.PNG)
+1. Select Product in the menu on the left side.
+![Enterprise Wallet Product](https://user-images.githubusercontent.com/95221118/164191583-333c9d40-6963-4215-915b-86adc80d634e.PNG)
+2. Next, select Import on the top of the page.
+![Enterprise Wallet Product Import](https://user-images.githubusercontent.com/95221118/164191606-d0ed6012-fa6e-46b2-b2aa-0a1a990ef55e.PNG)
+3. Then click on View Responses.
+![Enterprise Wallet Product Import Responses](https://user-images.githubusercontent.com/95221118/164191631-be889401-6508-4a82-96cb-5be79dc70ba4.PNG)
+<p/>
+</details>
 
 ## Buffering
 - done by mapping engine
