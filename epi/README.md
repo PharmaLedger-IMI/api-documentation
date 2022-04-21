@@ -163,20 +163,11 @@ After logging in to the Enterprise Wallet:
 <p/>
 </details>
 
-open questions:
-How would you implement the callbacks to e.g. sap?
-Is there a option to redirect?
-
 ## Buffering
 Buffering gets handled by the mapping engine which is set up by setting up the ePI-Workspace.
 An embedded database is used to store messages before they are processed.
-There shouldn't be any speed and storage limits. 
-In the current state messages get processed almost instantly.
-
-questions:
-Is there a way to read the data from that database - like sap?
-Is that the same database where all the messages are stored?
-What happens if a message is processed?
+There shouldn't be any speed and storage limitations with the current workload of the system. 
+In the current state messages should get processed almost instantly.
 
 ## Try it out
 
