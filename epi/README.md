@@ -170,7 +170,7 @@ Is there a option to redirect?
 ## Buffering
 Buffering gets handled by the mapping engine which is set up by setting up the ePI-Workspace.
 An embedded database is used to store messages before they are processed.
-There shouldn't be any speed and storage limits, except the storage of the server. 
+There shouldn't be any speed and storage limits. 
 In the current state messages get processed almost instantly.
 
 questions:
