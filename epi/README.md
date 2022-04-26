@@ -79,13 +79,65 @@ sequenceDiagram
 
 To enable SSO in application, application need to have tenant-client ID and modify epi-workspace source code as explained in below two steps. This document is prepared assuming that Azure being used for ePI application registration for tenant and client ID:
 
-#### 1. Getting tenant and client ID for ePI application
+#### 1. Get values for ePI application
 
-| Step  | Location |
-| ------------- | ------------- |
-| 1. Refer to the two links below for registering your ePI in Azure Active Directory:<br>[How to get Azure api credentials](https://www.inkoop.io/blog/how-to-get-azure-api-credentials/)<br>[How to find tenant](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)| As per your organization  |
-| 2. Put custom scope as explained in the following link:<br>[Quickstart app expose web apis](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis) | As per your organization  |
-| 3. Call back URL value in Azure registration must match with:<br>3.1 ‘redirectPath’ value in apihub.json such as ‘http://localhost:8080/?root=true’<br>3.2 ‘postLogoutRedirectUrl’ value in apihub.json such as ‘http://localhost:8080/?logout=true’ | Common for all and as defined in apihub.json  |
+After [creating a new app in Azure](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app) you can find the necessary values for the source code modification here:
+
+In the Azure Service "App registration":
+<details>
+<summary>
+    clientId
+</summary>
+
+![App registrations overview marked Endpoints clientId]()
+</details>
+
+<details>
+<summary>
+    tenantID (oauthJWKSEndpoint, issuer, authorizationEndpoint, tokenEndpoint, logoutUrl)
+</summary>
+   
+![App registrations overview marked Endpoints tenantID]()
+
+</details>
+
+<details>
+<summary>
+    scope
+</summary>
+    
+add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis)
+    
+![App registrations expose an API]()
+</details>
+ 
+<details>
+<summary>
+    redirectPath (must end with "/?root=true")
+</summary>
+    
+![App registrations authentication redirectPath]()
+</details>
+
+<details>
+<summary>
+    postLogoutRedirectUrl (must end with "/?logout=true")
+</summary>
+
+![App registrations authentication logoutUrl]()
+</details>
+
+<details>
+<summary>
+    clientSecret
+</summary>
+
+![App registrations certificates   secrets]()
+</details>
+
+In the Azure Service "Enterprise Applications":
+
+Add members in the Users and groups section of the Enterprise applications in Azure. Only members that've been added here can access the application with SSO.
 
 #### 2. Source code modification
 [apihub.json helmchart location](https://github.com/PharmaLedger-IMI/helmchart-ethadapter/blob/master/charts/epi/templates/_configmap-config.tpl)
