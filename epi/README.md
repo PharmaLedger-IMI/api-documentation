@@ -107,7 +107,7 @@ In the Azure Service "App registration":
     
 add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-expose-web-apis)
     
-![App registrations expose an API]()
+![App registrations expose an API - scope](https://user-images.githubusercontent.com/95221118/165943894-1bdd0576-628e-46b2-8bf2-661a34b186b2.png)
 </details>
  
 <details>
@@ -115,7 +115,7 @@ add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develo
     redirectPath (must end with "/?root=true")
 </summary>
     
-![App registrations authentication redirectPath]()
+![App registrations authentication - redirect path](https://user-images.githubusercontent.com/95221118/165944020-4d5d9ae1-6f13-42d2-a11f-102f4fd08eb4.png)
 </details>
 
 <details>
@@ -123,7 +123,7 @@ add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develo
     postLogoutRedirectUrl (must end with "/?logout=true")
 </summary>
 
-![App registrations authentication logoutUrl]()
+![App registrations authentication - logout url](https://user-images.githubusercontent.com/95221118/165944102-232dc577-21b8-4c6c-86cf-8bcc55767bbc.png)
 </details>
 
 <details>
@@ -137,11 +137,20 @@ add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develo
 In the Azure Service "Enterprise Applications":
 
 Add members in the Users and groups section of the Enterprise applications in Azure. Only members that've been added here can access the application with SSO.
+<details>
+<summary>
+    Users and groups
+</summary>
+    
+![Enterprise Applications Users and groups - users](https://user-images.githubusercontent.com/95221118/165945438-65e1048d-586f-4b1f-b89d-1c1a06493f19.png)
+</details>
+
 
 #### 2. Source code modification
 [apihub.json helmchart location](https://github.com/PharmaLedger-IMI/helmchart-ethadapter/blob/master/charts/epi/templates/_configmap-config.tpl)
 - Apihub-root/external-volume/config/apihub.json:
-     -	Keep ‘true’ value for flags: ‘enableOAuth’, ‘enableLocalhostAuthorization’, and ‘serverAuthentication’
+     -	Keep ‘true’ value for flags: ‘enableOAuth’ and ‘serverAuthentication’
+     -	Keep ‘false’ value for flag: ‘enableLocalhostAuthorization’ if your setup is in the cloud. If your setup is local - 
      -	Modify Tenant ID value for flags: ‘oauthJWKSEndpoint’, ‘issuer’, ‘authorizationEndpoint’, ‘tokenEndpoint’ and ‘logoutUrl’.
      -	Modify Client ID for flags: ‘clientId’ and ‘scope’.
 -	Trust Loader evironment settings for SSO
