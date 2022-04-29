@@ -88,8 +88,8 @@ In the Azure Service "App registration":
 <summary>
     clientId
 </summary>
-
-![App registrations overview marked Endpoints clientId]()
+    
+![App registrations - client id](https://user-images.githubusercontent.com/95221118/165930712-2d9bb095-505b-4996-b2d8-923523b99dda.png)
 </details>
 
 <details>
@@ -97,8 +97,7 @@ In the Azure Service "App registration":
     tenantID (oauthJWKSEndpoint, issuer, authorizationEndpoint, tokenEndpoint, logoutUrl)
 </summary>
    
-![App registrations overview marked Endpoints tenantID]()
-
+![App registrations - tenant id](https://user-images.githubusercontent.com/95221118/165930797-3dd610c0-3cf7-402f-b54c-4cbca1431bf1.png)
 </details>
 
 <details>
@@ -132,7 +131,7 @@ add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develo
     clientSecret
 </summary>
 
-![App registrations certificates   secrets]()
+![App registrations certificates and secrets - client secret](https://user-images.githubusercontent.com/95221118/165931661-395fade1-eee7-49d9-9106-47b840a2f86c.png)
 </details>
 
 In the Azure Service "Enterprise Applications":
