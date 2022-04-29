@@ -1,7 +1,7 @@
 # ePI - electronic Product Information
 
 ### Overview
-Please find information about setting up the ePI-API [here](https://www.google.com) (soon)<br>
+Please find information about setting up the ePI application (including the ePI-API) [here](https://www.google.com) (soon)<br>
 and the openapi documentation with testing capabilites [here](https://www.google.com) (soon).
 
 Contact for further questions: Sînică Alboaie (sinica.alboaie@axiologic.net)
