@@ -2,7 +2,7 @@
 
 ### Overview
 Please find information about setting up the ePI application (including the ePI-API) [here](https://www.google.com) (soon)<br>
-and the openapi documentation with testing capabilites [here](https://www.google.com) (soon).
+and the OpenAPI documentation with testing capabilites (Swagger UI) [here](https://app.swaggerhub.com/apis-docs/lukas.osterheider/PharmaLedger_ePI/).
 
 Contact for further questions: Sînică Alboaie (sinica.alboaie@axiologic.net)
 
