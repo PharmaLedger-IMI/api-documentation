@@ -207,6 +207,15 @@ https://{serverPath}/mappingEngine/{domain}/{subdomain}/saveResult
 E.g.: https://epi-singapore-dev.535161841476.cloud.bayer.com/mappingEngine/epipoc/vault.my-company/saveResult
 ```
 
+You can define multiple receiverIDs/endPointIds with their own callback urls in the [epi.json](https://github.com/PharmaLedger-IMI/epi-workspace/blob/master/apihub-root/external-volume/config/domains/epi.json) file. Then depending on the receiverID sent in the request, the callback will be sent to the defined url.
+
+```
+"mappingEnginResultURLs": [{
+    "endPointId": "NOVARTIS_P75_010",
+    "endPointURL": "http://localhost:8080/mappingEngine/epi/default/saveResult"
+  }],
+```
+
 You can see the callbacks in the Enterprise Wallet under Products->Import->View Responses
 <details>
 <summary>Click to expand for a visual guide on where to find the callbacks.</summary>
@@ -225,9 +234,11 @@ After logging in to the Enterprise Wallet:
 
 ## Buffering
 Buffering gets handled by the mapping engine which is set up by setting up the ePI-Workspace.
-An embedded database is used to store messages before they are processed.
+An embedded database ([lokijs](https://github.com/techfort/LokiJS)) is used to store messages before they are processed.
 There shouldn't be any speed and storage limitations with the current workload of the system. 
 In the current state messages should get processed almost instantly.
+
+There is currently no implementation of a monitoring tool for the database in place.
 
 ## Try it out
 
