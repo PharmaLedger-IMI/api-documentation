@@ -1,0 +1,425 @@
+openapi: 3.0.3
+info:
+  title: ePI - electronic Product Information API
+  version: '1.0'
+  x-logo:
+    url: ''
+servers:
+  - url: https://{serverPath}/mappingEngine/epiqa/vault.qa.{companyID}
+    variables:
+      serverPath:
+        default: epiqa.westeurope.cloudapp.azure.com
+        description: website URL
+      companyID:
+        default: nvs
+        description: company abbreviation
+  - url: https://{serverPath}/mappingEngine/epidev/vault.dev.{companyID}
+    variables:
+      serverPath:
+        default: epidev.westeurope.cloudapp.azure.com
+        description: website URL
+      companyID:
+        default: nvs
+        description: company abbreviation
+paths:
+  /:
+    put:
+      tags:
+        - batch
+      operationId: batch
+      summary: create and update a batch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - messageType
+                - messageTypeVersion
+                - senderID
+                - receiverID
+                - messageID
+                - messageDateTime
+                - batch
+              properties:
+                messageType:
+                  type: string
+                messageTypeVersion:
+                  type: number
+                  format: float
+                senderID:
+                  type: string
+                receiverID:
+                  type: string
+                messageID:
+                  type: string
+                messageDateTime:
+                  type: string
+                  format: date-time
+                batch:
+                  type: object
+                  required:
+                    - productCode
+                    - batch
+                    - expiryDate
+                  properties:
+                    productCode:
+                      type: string
+                      maxLength: 14
+                    batch:
+                      type: string
+                      maxLength: 20
+                    expiryDate:
+                      type: string
+                      maxLength: 6
+                    packagingSiteName:
+                      type: string
+                      maxLength: 100
+                    flagEnableEXPVerification:
+                      type: boolean
+                    flagEnableExpiredEXPCheck:
+                      type: boolean
+                    batchMessage:
+                      type: string
+                      maxLength: 100
+                    flagEnableBatchRecallMessage:
+                      type: boolean
+                    recallMessage:
+                      type: string
+                      maxLength: 1000
+                    flagEnableACFBatchCheck:
+                      type: boolean
+                    acfBatchCheckURL:
+                      type: string
+                      maxLength: 1000
+                    flagEnableSNVerification:
+                      type: boolean
+                    snValid:
+                      type: array
+                      items:
+                        type: string
+                    snRecalled:
+                      type: array
+                      items:
+                        type: string
+                    snDecom:
+                      type: array
+                      items:
+                        type: string
+            example:
+              messageType: Batch
+              messageTypeVersion: 0.1
+              senderId: NOVARTIS
+              receiverId: ePI_DSU_NOVARTIS
+              messageId: '0001234567891'
+              messageDateTime: 2022-03-03T11:20:00CET
+              batch:
+                productCode: '09088884204623'
+                batch: SO10022
+                expiryDate: '230630'
+                packagingSiteName: Stein
+                flagEnableEXPVerification: true
+                flagEnableExpiredEXPCheck: true
+                batchMessage: ''
+                flagEnableBatchRecallMessage: false
+                recallMessage: ''
+                flagEnableACFBatchCheck: false
+                acfBatchCheckURL: ''
+                flagEnableSNVerification: true
+                snValid:
+                  - '634083499701'
+                snRecalled: []
+                snDecom: []
+      responses:
+        '200':
+            description: OK
+      callbacks:
+        callback:
+          '{$request.body#/callbackUrl}':
+              post:
+                requestBody:
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        required:
+                          - messageType
+                          - messageTyperVersion
+                          - senderID
+                          - receiverID
+                          - messageID
+                          - messageDateTime
+                          - requestMessageType
+                          - requestMessageTypeVersion
+                          - requestSenderID
+                          - requestMessageDateTime
+                          - responseCounter
+                          - responseType
+                        properties:
+                          messageType:
+                            type: string
+                          messageTypeVersion:
+                            type: number
+                            format: float
+                          senderID:
+                            type: string
+                          receiverID:
+                            type: string
+                          messageID:
+                            type: string
+                          messageDateTime:
+                            type: string
+                            format: date-time
+                          requestMessageType:
+                            type: string
+                          requestMessageTypeVersion:
+                            type: number
+                            format: float
+                          requestSenderID:
+                            type: string
+                          requestMessageDateTime:
+                            type: string
+                            format: date-time
+                          responseCounter:
+                            type: number
+                          responseType:
+                            type: string
+                            format: char
+                          responseDescription:
+                            type: string
+                            format: char
+                          errorData:
+                            type: string
+                            format: char
+                          errorDataField:
+                            type: string
+                            format: char
+                responses:
+                  '200':
+                    description: Your server returns this code if it accepts the callback
+      parameters:
+        - name: token
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+            maxLength: 200
+  //:
+    summary: ''
+    put:
+      tags:
+        - product
+      operationId: product
+      summary: create and update a product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - messageType
+                - messageTypeVersion
+                - senderID
+                - receiverID
+                - messageID
+                - messageDateTime
+                - batch
+              properties:
+                messageType:
+                  type: string
+                messageTypeVersion:
+                  type: number
+                  format: float
+                senderID:
+                  type: string
+                receiverID:
+                  type: string
+                messageID:
+                  type: string
+                messageDateTime:
+                  type: string
+                  format: date-time
+                product:
+                  type: object
+                  required: 
+                    - productCode
+                    - inventedName
+                    - nameMedicinalProduct
+                  properties:
+                    productCode:
+                      type: string
+                      maxLength: 14
+                    inventedName:
+                      type: string
+                      maxLength: 100
+                    nameMedicinalProduct:
+                      type: string
+                      maxLength: 100
+                    internalMaterialCode:
+                      type: string
+                      maxLength: 20
+                    strength:
+                      type: string
+                      maxLength: 10
+                    flagEnableACFProductCheck:
+                      type: boolean
+                    adverseEventReportingURL:
+                      type: string
+                      maxLength: 1000
+                    acfProductCheckURL:
+                      type: string
+                      maxLength: 1000
+                    flagDisplayEPI_BatchRecalled:
+                      type: boolean
+                    flagDisplayEPI_SNRecalled:
+                      type: boolean
+                    flagDisplayEPI_SNDecommissioned:
+                      type: boolean
+                    flagDisplayEPI_SNUnknown:
+                      type: boolean
+                    flagDisplayEPI_EXPIncorrect:
+                      type: boolean
+                    flagDisplayEPI_BatchExpired:
+                      type: boolean
+                    patientSpecificLeaflet:
+                      type: string
+                      maxLength: 300
+                    healthcarePractitionerInfo:
+                      type: string
+                      maxLength: 300
+                    markets:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          marketID:
+                            type: string
+                          nationalCode:
+                            type: string
+                          mahName:
+                            type: string
+                          legalEntityName:
+                            type: string
+            example:
+              messageType: Product
+              messageTypeVersion: 0.7
+              senderId: Novartis
+              receiverId: ePI_DSU_NOVARTIS
+              messageId: '1501234567890'
+              messageDateTime: 2022-03-04T13:10:01CET
+              product:
+                productCode: '07612791478284'
+                internalMaterialCode: '123456'
+                inventedName: S-IntegProduct_02
+                nameMedicinalProduct: Super IntegProduct 2.5 mg 56 tablets
+                strength: 2.5 mg
+                flagEnableAdverseEventReporting: false
+                flagEnableACFProductCheck: false
+                flagDisplayEPI_BatchRecalled: false
+                flagDisplayEPI_SNRecalled: true
+                flagDisplayEPI_SNDecommissioned: true
+                flagDisplayEPI_SNUnknown: true
+                flagDisplayEPI_EXPIncorrect: true
+                flagDisplayEPI_BatchExpired: true
+                markets:
+                  - marketId: IT
+                    nationalCode: '123456'
+                    mahName: Novartis Italy
+                    legalEntityName: Novartis Italy SA
+      responses:
+        200:
+          description: OK
+      callbacks:
+        callback:
+          '{$request.body#/callbackUrl}':
+              post:
+                requestBody:
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        required:
+                          - messageType
+                          - messageTyperVersion
+                          - senderID
+                          - receiverID
+                          - messageID
+                          - messageDateTime
+                          - requestMessageType
+                          - requestMessageTypeVersion
+                          - requestSenderID
+                          - requestMessageDateTime
+                          - responseCounter
+                          - responseType
+                        properties:
+                          messageType:
+                            type: string
+                          messageTypeVersion:
+                            type: number
+                            format: float
+                          senderID:
+                            type: string
+                          receiverID:
+                            type: string
+                          messageID:
+                            type: string
+                          messageDateTime:
+                            type: string
+                            format: date-time
+                          requestMessageType:
+                            type: string
+                          requestMessageTypeVersion:
+                            type: number
+                            format: float
+                          requestSenderID:
+                            type: string
+                          requestMessageDateTime:
+                            type: string
+                            format: date-time
+                          responseCounter:
+                            type: number
+                          responseType:
+                            type: string
+                            format: char
+                          responseDescription:
+                            type: string
+                            format: char
+                          errorData:
+                            type: string
+                            format: char
+                          errorDataField:
+                            type: string
+                            format: char
+                responses:
+                  '200':
+                    description: Your server returns this code if it accepts the callback
+      parameters:
+        - name: token
+          in: header
+          required: true
+          deprecated: false
+          schema:
+            type: string
+            maxLength: 20
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: adminKey
+  schemas: {}
+  headers: {}
+  responses: {}
+  parameters: {}
+tags:
+  - name: product
+    description: product
+  - name: batch
+    description: batch
+security:
+  - ApiKeyAuth: []

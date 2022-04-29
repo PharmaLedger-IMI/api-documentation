@@ -1,0 +1,87 @@
+{
+  "storage": "../apihub-root",
+  "port": 8080,
+  "preventRateLimit": true,
+  "activeComponents": [
+    "virtualMQ",
+    "messaging",
+    "notifications",
+    "filesManager",
+    "bdns",
+    "bricksLedger",
+    "bricksFabric",
+    "bricking",
+    "anchoring",
+    "dsu-wizard",
+    "gtin-dsu-wizard",
+    "epi-mapping-engine",
+    "epi-mapping-engine-results",
+    "acdc-reporting",
+    "debugLogger",
+    "mq",
+    "secrets",
+    "staticServer"
+  ],
+  "componentsConfig": {
+    "epi-mapping-engine": {
+      "module": "./../../epi-utils",
+      "function": "getEPIMappingEngineForAPIHUB"
+    },
+    "epi-mapping-engine-results": {
+      "module": "./../../epi-utils",
+      "function": "getEPIMappingEngineMessageResults"
+    },
+    "acdc-reporting": {
+      "module": "./../../reporting-service/middleware",
+      "function": "Init"
+    },
+    "gtin-dsu-wizard": {
+      "module": "./../../gtin-dsu-wizard"
+    },
+    "staticServer": {
+      "excludedFiles": [
+        ".*.secret"
+      ]
+    },
+    "bricking": {},
+    "anchoring": {}
+  },
+  "responseHeaders": {
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-XSS-Protection": "1; mode=block"
+  },
+  "enableRequestLogger": true,
+  "enableJWTAuthorisation": false,
+  "enableOAuth": true,
+  "oauthJWKSEndpoint": "https://login.microsoftonline.com/3ac94b33-9135-4821-9502-eafda6592a35/discovery/v2.0/keys",
+  "enableLocalhostAuthorization": true,
+  "skipOAuth": [
+    "/assets",
+    "/bdns",
+    "/bundles",
+    "/getAuthorization",
+    "/external-volume/config/oauthConfig.js",
+	"/leaflet-wallet/",
+	"/directory-summary/",
+	"/iframe/"
+  ],
+  "oauthConfig": {
+    "issuer": {
+      "issuer": "https://login.microsoftonline.com/3ac94b33-9135-4821-9502-eafda6592a35/oauth2/v2.0/",
+      "authorizationEndpoint": "https://login.microsoftonline.com/3ac94b33-9135-4821-9502-eafda6592a35/oauth2/v2.0/authorize",
+      "tokenEndpoint": "https://login.microsoftonline.com/3ac94b33-9135-4821-9502-eafda6592a35/oauth2/v2.0/token"
+    },
+    "client": {
+      "clientId": "6b02b906-9448-4217-80c2-0996dde4cd03",
+      "scope": "email offline_access openid api://6b02b906-9448-4217-80c2-0996dde4cd03/access_as_user",
+      "redirectPath": "http://localhost:8080/?root=true",
+      "clientSecret": "K~C7Q~8w2o5pbq56q.Radb7eu-FVMnDN.Jz92",
+      "logoutUrl": "https://login.microsoftonline.com/3ac94b33-9135-4821-9502-eafda6592a35/oauth2/logout",
+      "postLogoutRedirectUrl": "http://localhost:8080/?logout=true"
+    },
+    "sessionTimeout": 1800000,
+    "keyTTL": 3600000,
+    "debugLogEnabled": false
+  },
+  "serverAuthentication": true
+}

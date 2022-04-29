@@ -1,0 +1,492 @@
+openapi: 3.0.3
+info:
+  title: ePI - electronic Product Information API
+  version: '1.0'
+  x-logo:
+    url: ''
+servers:
+  - url: https://{serverPath}/mappingEngine/{epiDomain}/{companyVaultDomain}
+    variables:
+      serverPath:
+        default: epi-singapore-dev.535161841476.cloud.bayer.com
+        description: ePI website URL
+      epiDomain:
+        default: epipoc
+        description: Main ePI domain of the specific installation
+      companyVaultDomain:
+        default: vault.my-company
+        description: Company vault domain of the specific installation
+paths:
+  /:
+    put:
+      operationId: product
+      summary: create and update a product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                type: object
+                required:
+                  - messageType
+                  - messageTypeVersion
+                  - senderID
+                  - receiverID
+                  - messageID
+                  - messageDateTime
+                  - batch
+                properties:
+                  messageType:
+                    type: string
+                  messageTypeVersion:
+                    type: number
+                    format: float
+                  senderID:
+                    type: string
+                  receiverID:
+                    type: string
+                  messageID:
+                    type: string
+                  messageDateTime:
+                    type: string
+                    format: date-time
+                  product:
+                    type: object
+                    required: 
+                      - productCode
+                      - inventedName
+                      - nameMedicinalProduct
+                    properties:
+                      productCode:
+                        type: string
+                        maxLength: 14
+                      inventedName:
+                        type: string
+                        maxLength: 100
+                      nameMedicinalProduct:
+                        type: string
+                        maxLength: 100
+                      internalMaterialCode:
+                        type: string
+                        maxLength: 20
+                      strength:
+                        type: string
+                        maxLength: 10
+                      flagEnableACFProductCheck:
+                        type: boolean
+                      adverseEventReportingURL:
+                        type: string
+                        maxLength: 1000
+                      acfProductCheckURL:
+                        type: string
+                        maxLength: 1000
+                      flagDisplayEPI_BatchRecalled:
+                        type: boolean
+                      flagDisplayEPI_SNRecalled:
+                        type: boolean
+                      flagDisplayEPI_SNDecommissioned:
+                        type: boolean
+                      flagDisplayEPI_SNUnknown:
+                        type: boolean
+                      flagDisplayEPI_EXPIncorrect:
+                        type: boolean
+                      flagDisplayEPI_BatchExpired:
+                        type: boolean
+                      patientSpecificLeaflet:
+                        type: string
+                        maxLength: 300
+                      healthcarePractitionerInfo:
+                        type: string
+                        maxLength: 300
+                      markets:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            marketID:
+                              type: string
+                            nationalCode:
+                              type: string
+                            mahName:
+                              type: string
+                            legalEntityName:
+                              type: string
+            example:
+              messageType: Product
+              messageTypeVersion: 0.7
+              senderId: Novartis
+              receiverId: ePI_DSU_NOVARTIS
+              messageId: '1501234567890'
+              messageDateTime: 2022-03-04T13:10:01CET
+              product:
+                productCode: '07612791478284'
+                internalMaterialCode: '123456'
+                inventedName: S-IntegProduct_02
+                nameMedicinalProduct: Super IntegProduct 2.5 mg 56 tablets
+                strength: 2.5 mg
+                flagEnableAdverseEventReporting: false
+                flagEnableACFProductCheck: false
+                flagDisplayEPI_BatchRecalled: false
+                flagDisplayEPI_SNRecalled: true
+                flagDisplayEPI_SNDecommissioned: true
+                flagDisplayEPI_SNUnknown: true
+                flagDisplayEPI_EXPIncorrect: true
+                flagDisplayEPI_BatchExpired: true
+                markets:
+                  - marketId: IT
+                    nationalCode: '123456'
+                    mahName: Novartis Italy
+                    legalEntityName: Novartis Italy SA
+      responses:
+        '200':
+            description: OK
+      callbacks:
+        callback:
+          '{$request.body#/callbackUrl}':
+              post:
+                requestBody:
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        required:
+                          - messageType
+                          - messageTyperVersion
+                          - senderID
+                          - receiverID
+                          - messageID
+                          - messageDateTime
+                          - requestMessageType
+                          - requestMessageTypeVersion
+                          - requestSenderID
+                          - requestMessageDateTime
+                          - responseCounter
+                          - responseType
+                        properties:
+                          messageType:
+                            type: string
+                          messageTypeVersion:
+                            type: number
+                            format: float
+                          senderID:
+                            type: string
+                          receiverID:
+                            type: string
+                          messageID:
+                            type: string
+                          messageDateTime:
+                            type: string
+                            format: date-time
+                          requestMessageType:
+                            type: string
+                          requestMessageTypeVersion:
+                            type: number
+                            format: float
+                          requestSenderID:
+                            type: string
+                          requestMessageDateTime:
+                            type: string
+                            format: date-time
+                          responseCounter:
+                            type: number
+                          responseType:
+                            type: string
+                            format: char
+                          responseDescription:
+                            type: string
+                            format: char
+                          errorData:
+                            type: string
+                            format: char
+                          errorDataField:
+                            type: string
+                            format: char
+                responses:
+                  '200':
+                    description: Your server returns this code if it accepts the callback
+
+  //:
+    put:
+      operationId: batch
+      summary: create and update a batch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - messageType
+                - messageTypeVersion
+                - senderID
+                - receiverID
+                - messageID
+                - messageDateTime
+                - batch
+              properties:
+                messageType:
+                  type: string
+                messageTypeVersion:
+                  type: number
+                  format: float
+                senderID:
+                  type: string
+                receiverID:
+                  type: string
+                messageID:
+                  type: string
+                messageDateTime:
+                  type: string
+                  format: date-time
+                product:
+                  type: object
+                  required: 
+                    - productCode
+                    - inventedName
+                    - nameMedicinalProduct
+                  properties:
+                    productCode:
+                      type: string
+                      maxLength: 14
+                    inventedName:
+                      type: string
+                      maxLength: 100
+                    nameMedicinalProduct:
+                      type: string
+                      maxLength: 100
+                    internalMaterialCode:
+                      type: string
+                      maxLength: 20
+                    strength:
+                      type: string
+                      maxLength: 10
+                    flagEnableACFProductCheck:
+                      type: boolean
+                    adverseEventReportingURL:
+                      type: string
+                      maxLength: 1000
+                    acfProductCheckURL:
+                      type: string
+                      maxLength: 1000
+                    flagDisplayEPI_BatchRecalled:
+                      type: boolean
+                    flagDisplayEPI_SNRecalled:
+                      type: boolean
+                    flagDisplayEPI_SNDecommissioned:
+                      type: boolean
+                    flagDisplayEPI_SNUnknown:
+                      type: boolean
+                    flagDisplayEPI_EXPIncorrect:
+                      type: boolean
+                    flagDisplayEPI_BatchExpired:
+                      type: boolean
+                    patientSpecificLeaflet:
+                      type: string
+                      maxLength: 300
+                    healthcarePractitionerInfo:
+                      type: string
+                      maxLength: 300
+                    markets:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          marketID:
+                            type: string
+                          nationalCode:
+                            type: string
+                          mahName:
+                            type: string
+                          legalEntityName:
+                            type: string
+            example:
+              messageType: Batch
+              messageTypeVersion: 0.1
+              senderId: NOVARTIS
+              receiverId: ePI_DSU_NOVARTIS
+              messageId: '0001234567891'
+              messageDateTime: 2022-03-03T11:20:00CET
+              batch:
+                productCode: '09088884204623'
+                batch: SO10022
+                expiryDate: '230630'
+                packagingSiteName: Stein
+                flagEnableEXPVerification: true
+                flagEnableExpiredEXPCheck: true
+                batchMessage: ''
+                flagEnableBatchRecallMessage: false
+                recallMessage: ''
+                flagEnableACFBatchCheck: false
+                acfBatchCheckURL: ''
+                flagEnableSNVerification: true
+                snValid:
+                  - '634083499701'
+                snRecalled: []
+                snDecom: []
+      responses:
+        '200':
+            description: OK
+      callbacks:
+        callback:
+          '{$request.body#/callbackUrl}':
+              post:
+                requestBody:
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        required:
+                          - messageType
+                          - messageTyperVersion
+                          - senderID
+                          - receiverID
+                          - messageID
+                          - messageDateTime
+                          - requestMessageType
+                          - requestMessageTypeVersion
+                          - requestSenderID
+                          - requestMessageDateTime
+                          - responseCounter
+                          - responseType
+                        properties:
+                          messageType:
+                            type: string
+                          messageTypeVersion:
+                            type: number
+                            format: float
+                          senderID:
+                            type: string
+                          receiverID:
+                            type: string
+                          messageID:
+                            type: string
+                          messageDateTime:
+                            type: string
+                            format: date-time
+                          requestMessageType:
+                            type: string
+                          requestMessageTypeVersion:
+                            type: number
+                            format: float
+                          requestSenderID:
+                            type: string
+                          requestMessageDateTime:
+                            type: string
+                            format: date-time
+                          responseCounter:
+                            type: number
+                          responseType:
+                            type: string
+                            format: char
+                          responseDescription:
+                            type: string
+                            format: char
+                          errorData:
+                            type: string
+                            format: char
+                          errorDataField:
+                            type: string
+                            format: char
+                responses:
+                  '200':
+                    description: Your server returns this code if it accepts the callback
+  ///:
+    put:
+      operationId: leaflet
+      summary: create and update a leaflet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+                - language
+                - messageType
+                - xmlFileContent
+                - productCode
+              properties:
+                status:
+                  type: string
+                language:
+                  type: string
+                messageType:
+                  type: string
+                xmlFileContent:
+                  type: string
+                otherFilesContent:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      filename:
+                        type: string
+                      fileContent:
+                        type: string
+                productCode:
+                  type: number
+            example:
+              status: 'new'
+              language: 'en'
+              messageType: 'leaflet'
+              xmlFileContent: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4...'
+              otherFilesContent:
+                - filename: '425be71d-812e-4a54-8dea-bb27eb6b4ecf-01.jpg'
+                  fileContent: '/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQI...'
+                - filename: '425be71d-812e-4a54-8dea-bb27eb6b4ecf-02.jpg'
+                  fileContent: '/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUDBAQEAw...'
+              productCode: '05290931025639'
+      responses:
+        '200':
+            description: OK
+  ////:
+    put:
+      operationId: deleteleaflet
+      summary: delete a leaflet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+                - language
+                - messageType
+                - delete
+                - productCode
+              properties:
+                status:
+                  type: string
+                language:
+                  type: string
+                messageType:
+                  type: string
+                delete:
+                  type: boolean
+                productCode:
+                  type: number
+            example:
+              status: 'delete'
+              language: 'en'
+              messageType: 'leaflet'
+              delete: true
+              productCode: '05290931025639'
+      responses:
+        '200':
+            description: OK
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: token
+  schemas: {}
+  headers: {}
+  responses: {}
+  parameters: {}
+security:
+  - ApiKeyAuth: []
