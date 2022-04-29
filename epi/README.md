@@ -112,7 +112,7 @@ add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develo
  
 <details>
 <summary>
-    redirectPath (must end with "/?root=true")
+    redirectPath (main application url + "/?root=true")
 </summary>
     
 ![App registrations authentication - redirect path](https://user-images.githubusercontent.com/95221118/165944020-4d5d9ae1-6f13-42d2-a11f-102f4fd08eb4.png)
@@ -120,7 +120,7 @@ add a [new scope](https://docs.microsoft.com/en-us/azure/active-directory/develo
 
 <details>
 <summary>
-    postLogoutRedirectUrl (must end with "/?logout=true")
+    postLogoutRedirectUrl (main application url + "/?logout=true")
 </summary>
 
 ![App registrations authentication - logout url](https://user-images.githubusercontent.com/95221118/165944102-232dc577-21b8-4c6c-86cf-8bcc55767bbc.png)
@@ -150,7 +150,7 @@ Add members in the Users and groups section of the Enterprise applications in Az
 [apihub.json helmchart location](https://github.com/PharmaLedger-IMI/helmchart-ethadapter/blob/master/charts/epi/templates/_configmap-config.tpl)
 - Apihub-root/external-volume/config/apihub.json:
      -	Keep ‘true’ value for flags: ‘enableOAuth’ and ‘serverAuthentication’
-     -	Keep ‘false’ value for flag: ‘enableLocalhostAuthorization’ if your setup is in the cloud. If your setup is local - 
+     -	Keep ‘false’ value for flag: ‘enableLocalhostAuthorization’ if your setup is in the cloud. Keep 'true' if setup is local.
      -	Modify Tenant ID value for flags: ‘oauthJWKSEndpoint’, ‘issuer’, ‘authorizationEndpoint’, ‘tokenEndpoint’ and ‘logoutUrl’.
      -	Modify Client ID for flags: ‘clientId’ and ‘scope’.
 -	Trust Loader evironment settings for SSO
